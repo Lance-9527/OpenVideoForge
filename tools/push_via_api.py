@@ -2,12 +2,12 @@
 """通过 GitHub Git Data API 推送本地仓库（绕过被封锁的 git 协议通道）。"""
 import subprocess, json, base64, os, sys, urllib.request, urllib.error, time
 
-REPO = "Twdhsi-666/whitebox-workbench"
+REPO = "Lance-9527/OpenVideoForge"
 BRANCH = "main"
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # GitHub 账号主邮箱会被 Git Data API 拿去当提交作者兜底，必须显式写死 noreply
-PUB_EMAIL = "340561342+Twdhsi-666@users.noreply.github.com"
-IDENT = {"name": "Twdhsi-666", "email": PUB_EMAIL}
+PUB_EMAIL = "230287258+Lance-9527@users.noreply.github.com"
+IDENT = {"name": "Lance", "email": PUB_EMAIL}
 MSG = subprocess.run(["git", "log", "-1", "--pretty=%B"],
                      capture_output=True, text=True).stdout.strip() or "update"
 
