@@ -1,0 +1,65 @@
+{
+  "updatedAt": "2026-11-17",
+  "note": "下面这些成品全部由 OpenVideoForge 自己跑出来：真实世界部分的数据来自 OpenStreetMap，室内与产品部分由 Agent 用 Blender 生成模型后渲染。",
+  "items": [
+    {
+      "id": "huangpu-city",
+      "title": "上海黄浦区 · 全境白膜",
+      "desc": "从 OpenStreetMap 抓取黄浦区全部建筑轮廓与路网，按真实比例生成白膜，一个镜头看完整个区。",
+      "tags": ["真实世界", "白膜", "全境"],
+      "poster": "huangpu-city.jpg",
+      "video": "huangpu-city.mp4",
+      "meta": "1280×720 · 2s 缓推",
+      "credit": "© OpenStreetMap contributors"
+    },
+    {
+      "id": "huangpu-core",
+      "title": "上海黄浦区 · 核心街区",
+      "desc": "缩小半径重抓同一片街区，保留楼宇体量与街道切分，看清一栋楼和一条路的相对关系。",
+      "tags": ["真实世界", "街区"],
+      "poster": "huangpu-core.jpg",
+      "video": "huangpu-core.mp4",
+      "meta": "1280×720 · 2s 环绕",
+      "credit": "© OpenStreetMap contributors"
+    },
+    {
+      "id": "sofa-product",
+      "title": "沙发产品片 · 室内棚拍",
+      "desc": "Agent 用 Blender 生成三人位沙发 GLB，摆进影棚环境，加灯光与机位，出电商可直接用的白膜产品片。",
+      "tags": ["电商", "产品", "室内"],
+      "poster": "sofa-product.jpg",
+      "video": "sofa-product.mp4",
+      "meta": "1280×720 · 5s",
+      "credit": "模型由本项目 agent-side 脚本生成"
+    },
+    {
+      "id": "sofa-studio",
+      "title": "沙发演示 · 多机位",
+      "desc": "同一套资产换机位：相机与目标点各走一条轨道，环绕加推进，验证运镜不会穿模。",
+      "tags": ["运镜", "轨道相机", "产品"],
+      "poster": "sofa-studio.jpg",
+      "video": "sofa-studio.mp4",
+      "meta": "1280×720 · 5s",
+      "credit": "模型由本项目 agent-side 脚本生成"
+    },
+    {
+      "id": "menlou",
+      "title": "门楼牌坊 · 帧级镜头",
+      "desc": "10 秒多镜头时间线，逐帧可对齐：从牌坊前推过，再拉回全景，镜头之间能接得上。",
+      "tags": ["时间线", "多镜头", "10s"],
+      "poster": "menlou.jpg",
+      "video": "menlou.mp4",
+      "meta": "1280×720 · 10s",
+      "credit": "模型由本项目 agent-side 脚本生成"
+    },
+    {
+      "id": "interior-explode",
+      "title": "室内总览 · 楼层爆炸图",
+      "desc": "真实楼栋按楼层拆开悬浮，一眼看清上下层的体量关系 —— 挑楼层、做总览时的检查视图。",
+      "tags": ["室内", "爆炸图", "总览"],
+      "poster": "interior-explode.jpg",
+      "meta": "1280×720 · 静帧",
+      "credit": "© OpenStreetMap contributors"
+    }
+  ]
+}

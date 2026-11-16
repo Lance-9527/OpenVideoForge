@@ -7,29 +7,29 @@
   <link rel="icon" href="assets/favicon.png" type="image/png">
 <meta name="description" content="AI 视频白膜场景的导入、播放与管理工作台。预设环境搭白模，或导入任意 AI 生成的白膜 HTML，统一控制播放、跳转、截图。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cg fill='none' stroke='%23ffd250' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M16 3l13 7.5v11L16 29 3 21.5v-11z'/%3E%3Cpath d='M3 10.5L16 18l13-7.5M16 18v11'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="stylesheet" href="css/workbench.css?v=101">
+<link rel="stylesheet" href="css/workbench.css?v=102">
 <!-- cinemap 视觉层：先字体，再覆盖层（必须在 workbench.css 之后） -->
-<link rel="stylesheet" href="css/fonts.css?v=101">
-<link rel="stylesheet" href="css/cinemap.css?v=101">
+<link rel="stylesheet" href="css/fonts.css?v=102">
+<link rel="stylesheet" href="css/cinemap.css?v=102">
 <!-- v0.3 入口页「模板中心」改造（参考酷家乐电商棚拍信息架构） -->
-<link rel="stylesheet" href="css/studio.css?v=101">
+<link rel="stylesheet" href="css/studio.css?v=102">
 <!-- v0.4 编辑器右侧三栏（环境 / 对象 / 相机） -->
-<link rel="stylesheet" href="css/inspector.css?v=101">
+<link rel="stylesheet" href="css/inspector.css?v=102">
 <!-- v0.6 素材库 / 画中画 / 曲线 -->
-<link rel="stylesheet" href="css/studio-library.css?v=101">
-<link rel="stylesheet" href="css/studio-city.css?v=101">
+<link rel="stylesheet" href="css/studio-library.css?v=102">
+<link rel="stylesheet" href="css/studio-city.css?v=102">
 <!-- v0.8 片库 / 影院模式 -->
-<link rel="stylesheet" href="css/studio-reels.css?v=101">
+<link rel="stylesheet" href="css/studio-reels.css?v=102">
 <!-- v1.0 AI 指令窗 -->
-<link rel="stylesheet" href="css/studio-agent.css?v=101">
-<link rel="stylesheet" href="css/studio-video.css?v=101">
-<link rel="stylesheet" href="css/studio-device.css?v=101">
-<link rel="stylesheet" href="css/studio-render-monitor.css?v=101">
-<link rel="stylesheet" href="css/studio-handoff.css?v=101">
-<link rel="stylesheet" href="css/studio-tracks.css?v=101">
-<link rel="stylesheet" href="css/studio-shot.css?v=101">
-<link rel="stylesheet" href="css/studio-sources.css?v=101">
-<link rel="stylesheet" href="css/studio-look.css?v=101">
+<link rel="stylesheet" href="css/studio-agent.css?v=102">
+<link rel="stylesheet" href="css/studio-video.css?v=102">
+<link rel="stylesheet" href="css/studio-device.css?v=102">
+<link rel="stylesheet" href="css/studio-render-monitor.css?v=102">
+<link rel="stylesheet" href="css/studio-handoff.css?v=102">
+<link rel="stylesheet" href="css/studio-tracks.css?v=102">
+<link rel="stylesheet" href="css/studio-shot.css?v=102">
+<link rel="stylesheet" href="css/studio-sources.css?v=102">
+<link rel="stylesheet" href="css/studio-look.css?v=102">
 <script type="importmap">
 { "imports": { "three": "./assets/three.module.js" } }
 </script>
@@ -112,6 +112,15 @@
           </button>
         </div>
         <input type="file" id="modelInput" accept=".glb,.gltf,model/gltf-binary,model/gltf+json" hidden multiple>
+      </section>
+
+      <section class="en-sec" id="showcaseSec" hidden>
+        <div class="en-sec-head">
+          <h2>成品示例</h2>
+          <span class="en-sec-tip">先看看能做出什么 —— 点开能播放</span>
+        </div>
+        <div class="sc-grid" id="showcaseGrid"></div>
+        <p class="sc-note" id="showcaseNote"></p>
       </section>
 
       <section class="en-sec" id="assetLibSec">
@@ -304,49 +313,51 @@
   <input type="file" id="fileInput" multiple accept=".html,.htm,.json" hidden>
 </div>
 
-<script type="module" src="js/assetlib.js?v=101"></script>
-<script type="module" src="js/scenes.js?v=101"></script>
-<script src="js/save-file.js?v=101"></script>
-<script src="js/grade-pipeline.js?v=101"></script>
+<script type="module" src="js/assetlib.js?v=102"></script>
+<script type="module" src="js/scenes.js?v=102"></script>
+<script src="js/save-file.js?v=102"></script>
+<script src="js/grade-pipeline.js?v=102"></script>
 <!-- ★ 2026-11-10：「打开就是上次的地方」—— 记住并自动恢复上次调出的真实世界。
      ★ 必须排在 app.js **之前**：app.js 的 init() 会同步读 window.__ovfLastWorld
        来显示入口页的「继续上次」卡片；模块按文档顺序执行，放后面就来不及了
        （实测：卡片一直不出现）。 -->
-<script type="module" src="js/studio-lastworld.js?v=101"></script>
-<script type="module" src="js/app.js?v=101"></script>
+<script type="module" src="js/studio-lastworld.js?v=102"></script>
+<script type="module" src="js/app.js?v=102"></script>
 <!-- v0.3 入口页改造：加壳 + 装饰卡片 + 筛选，不改 app.js 渲染逻辑 -->
-<script type="module" src="js/studio.js?v=101"></script>
+<script type="module" src="js/studio.js?v=102"></script>
+<!-- 成品示例板块：读 assets/showcase/manifest.json，渲染卡片 + 浮层播放 -->
+<script type="module" src="js/studio-showcase.js?v=102"></script>
 <!-- v0.5 编辑器顶栏重排 + 工具（撤销/吸附/灯光/空对象/场景剪辑） -->
-<script type="module" src="js/studio-topbar.js?v=101"></script>
+<script type="module" src="js/studio-topbar.js?v=102"></script>
 <!-- v0.4 编辑器右侧三栏：灯光 / 机位 / 渲染 -->
-<script type="module" src="js/studio-inspector.js?v=101"></script>
+<script type="module" src="js/studio-inspector.js?v=102"></script>
 <!-- v0.6 素材库 / 画中画 / 曲线逐帧 -->
-<script type="module" src="js/studio-library.js?v=101"></script>
-<script type="module" src="js/studio-pip.js?v=101"></script>
-<script type="module" src="js/studio-look.js?v=101"></script>
-<script type="module" src="js/thumb.js?v=101"></script>
-<script type="module" src="js/parts.js?v=101"></script>
-<script type="module" src="js/studio-csm.js?v=101"></script>
-<script type="module" src="js/studio-city.js?v=101"></script>
-<script type="module" src="js/studio-curve.js?v=101"></script>
+<script type="module" src="js/studio-library.js?v=102"></script>
+<script type="module" src="js/studio-pip.js?v=102"></script>
+<script type="module" src="js/studio-look.js?v=102"></script>
+<script type="module" src="js/thumb.js?v=102"></script>
+<script type="module" src="js/parts.js?v=102"></script>
+<script type="module" src="js/studio-csm.js?v=102"></script>
+<script type="module" src="js/studio-city.js?v=102"></script>
+<script type="module" src="js/studio-curve.js?v=102"></script>
 <!-- v0.8 片库 / 预演播放 / AI 生成入口 -->
-<script type="module" src="js/studio-reels.js?v=101"></script>
+<script type="module" src="js/studio-reels.js?v=102"></script>
 <!-- v1.0 指令总线 + 右侧 AI 指令窗 + Agent 桥客户端 -->
-<script type="module" src="js/studio-agent.js?v=101"></script>
-<script type="module" src="js/studio-video.js?v=101"></script>
-<script type="module" src="js/studio-device.js?v=101"></script>
-<script type="module" src="js/studio-bridge.js?v=101"></script>
-<script type="module" src="js/studio-render-monitor.js?v=101"></script>
-<script type="module" src="js/studio-revisions.js?v=101"></script>
-<script type="module" src="js/studio-handoff.js?v=101"></script>
-<script type="module" src="js/studio-tracks.js?v=101"></script>
-<script type="module" src="js/studio-dragpanels.js?v=101"></script>
-<script type="module" src="js/studio-myassets.js?v=101"></script>
-<script type="module" src="js/studio-ctxmenu.js?v=101"></script>
-<script type="module" src="js/studio-previz.js?v=101"></script>
-<script type="module" src="js/studio-shot.js?v=101"></script>
-<script type="module" src="js/studio-sources.js?v=101"></script>
-<script type="module" src="js/studio-presets.js?v=101"></script>
-<script type="module" src="js/studio-assetlibrary.js?v=101"></script>
+<script type="module" src="js/studio-agent.js?v=102"></script>
+<script type="module" src="js/studio-video.js?v=102"></script>
+<script type="module" src="js/studio-device.js?v=102"></script>
+<script type="module" src="js/studio-bridge.js?v=102"></script>
+<script type="module" src="js/studio-render-monitor.js?v=102"></script>
+<script type="module" src="js/studio-revisions.js?v=102"></script>
+<script type="module" src="js/studio-handoff.js?v=102"></script>
+<script type="module" src="js/studio-tracks.js?v=102"></script>
+<script type="module" src="js/studio-dragpanels.js?v=102"></script>
+<script type="module" src="js/studio-myassets.js?v=102"></script>
+<script type="module" src="js/studio-ctxmenu.js?v=102"></script>
+<script type="module" src="js/studio-previz.js?v=102"></script>
+<script type="module" src="js/studio-shot.js?v=102"></script>
+<script type="module" src="js/studio-sources.js?v=102"></script>
+<script type="module" src="js/studio-presets.js?v=102"></script>
+<script type="module" src="js/studio-assetlibrary.js?v=102"></script>
 </body>
 </html>

@@ -617,6 +617,168 @@ html[data-theme="dark"] .en-sec-head h2::before { color: var(--brass); }
 .en-foot a:hover { color: var(--accent); }
 
 /* ==========================================================================
+   成品示例（showcase）—— 都是这个工作台自己跑出来的成品
+   —— 给第一次来的人看：不用动手，先看看能做出什么。
+   ========================================================================== */
+.sc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  /* ★ 独立层叠上下文：入口页那颗全屏星空 canvas 会让下面这块区域**缓存旧光栅**，
+     封面图解码完成后 Chrome 不重绘那一块（实测右列整块发黑，图却是好的）。
+     抬到 canvas 之上并自成一个层，就不会再被它的合成层压住。 */
+  position: relative;
+  z-index: 3;
+}
+.sc-card {
+  display: block;
+  width: 100%;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--cream);
+  color: var(--ink);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+  transition: transform var(--t) var(--ease), border-color var(--t) var(--ease),
+              box-shadow var(--t) var(--ease);
+}
+.sc-card:hover { transform: translateY(-2px); border-color: var(--brass-line); box-shadow: var(--shadow-2); }
+.sc-card:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.sc-thumb {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  background: var(--pane-bg);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+.sc-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sc-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  color: #faf7f0;
+  background: rgba(10, 9, 7, 0.55);
+  border: 1px solid rgba(250, 247, 240, 0.5);
+  backdrop-filter: blur(3px);
+  transition: transform var(--t) var(--ease), background var(--t) var(--ease);
+}
+.sc-card:hover .sc-play { transform: translate(-50%, -50%) scale(1.06); background: rgba(10, 9, 7, 0.72); }
+.sc-body { display: block; padding: 11px 12px 13px; }
+.sc-title {
+  display: block;
+  font-family: var(--f-serif);
+  font-size: var(--fs-base);
+  font-weight: 500;
+  color: var(--ink);
+  line-height: var(--lh-title);
+}
+.sc-desc {
+  display: block;
+  margin-top: 4px;
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.sc-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 9px; }
+.sc-tag {
+  font-style: normal;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  padding: 2px 7px;
+  border-radius: var(--r-xs);
+  background: var(--brass-soft);
+  border: 1px solid var(--brass-line);
+  color: var(--accent);
+}
+.sc-meta { display: block; margin-top: 8px; font-size: var(--fs-2xs); color: var(--ink-4); }
+.sc-note {
+  margin: 14px 0 0;
+  font-size: var(--fs-2xs);
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* 浮层：点开看大图 / 播放成片 */
+.sc-overlay {
+  position: fixed;
+  inset: 0;
+  /* ★ 抬到 #view-entry(40) / #modal(90) / #toasts(100) 之上；
+       入口页那颗星空 canvas 会让这块区域的合成层不刷新，浮层会“看不见但其实在”。 */
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: var(--scrim);
+  backdrop-filter: blur(6px);
+}
+.sc-panel {
+  width: min(900px, 94vw);
+  max-height: 92vh;
+  overflow: auto;
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-3);
+}
+.sc-panel video, .sc-panel img.sc-full {
+  display: block;
+  width: 100%;
+  max-height: 66vh;
+  object-fit: contain;
+  background: var(--pane-bg);
+  border-bottom: 1px solid var(--line);
+}
+.sc-panel-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px 10px;
+}
+.sc-panel-head h3 {
+  margin: 0;
+  font-family: var(--f-serif);
+  font-size: var(--fs-md);
+  font-weight: 500;
+  color: var(--ink);
+}
+.sc-panel-desc { margin: 5px 0 0; font-size: var(--fs-xs); color: var(--text-muted); line-height: 1.6; }
+.sc-panel-close {
+  margin-left: auto;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--r-xs);
+  border: 1px solid var(--line);
+  background: var(--cream);
+  color: var(--ink-3);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all var(--t-fast) var(--ease);
+}
+.sc-panel-close:hover { background: var(--cream-2); border-color: var(--brass-line); color: var(--ink); }
+.sc-panel-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px 14px;
+}
+.sc-panel-foot .sc-meta { margin-top: 0; }
+.sc-credit { margin-left: auto; font-size: var(--fs-2xs); color: var(--text-muted); }
+
+/* ==========================================================================
    8. 场景库视图（左列表 + 中卡片 + 右详情，三栏发丝线）
    ========================================================================== */
 #library { background: var(--cream); border-right: 1px solid var(--line); }

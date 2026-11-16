@@ -67,10 +67,46 @@ async function startStatic() {
       if (!file.startsWith(STATIC_ROOT)) { res.writeHead(403).end('forbidden'); return; }
       const st = await fsp.stat(file).catch(() => null);
       if (!st || !st.isFile()) { res.writeHead(404).end('not found'); return; }
+      const type = MIME[path.extname(file).toLowerCase()] || 'application/octet-stream';
+
+      // ★ Range 支持（2026-11-17）：视频必须能分段拉，否则 Chrome 会把 mp4
+      //   当成「下载」而不是内联播放（实测：成品示例里的 mp4 直接落到下载目录）。
+      //   解析 Range: bytes=start-end，回 206 + Content-Range。
+      const range = req.headers.range;
+      const m = range && /^bytes=(\d*)-(\d*)$/.exec(range.trim());
+      if (m) {
+        const size = st.size;
+        let start = m[1] === '' ? null : Number(m[1]);
+        let end = m[2] === '' ? null : Number(m[2]);
+        if (start === null && end !== null) {          // bytes=-N → 最后 N 字节
+          start = Math.max(0, size - end);
+          end = size - 1;
+        } else {
+          if (start === null) start = 0;
+          if (end === null || end >= size) end = size - 1;
+        }
+        if (start > end || start >= size) {
+          res.writeHead(416, { 'Content-Range': `bytes */${size}` }).end();
+          return;
+        }
+        const chunk = await fsp.readFile(file);
+        const slice = chunk.subarray(start, end + 1);
+        res.writeHead(206, {
+          'Content-Type': type,
+          'Content-Length': slice.length,
+          'Content-Range': `bytes ${start}-${end}/${size}`,
+          'Accept-Ranges': 'bytes',
+          'Cache-Control': 'no-cache',
+        });
+        res.end(slice);
+        return;
+      }
+
       const buf = await fsp.readFile(file);
       res.writeHead(200, {
-        'Content-Type': MIME[path.extname(file).toLowerCase()] || 'application/octet-stream',
+        'Content-Type': type,
         'Content-Length': buf.length,
+        'Accept-Ranges': 'bytes',
         'Cache-Control': 'no-cache',
       });
       res.end(buf);

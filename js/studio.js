@@ -37,6 +37,7 @@ const ICONS = {
   cube: '<path d="M12 2l9 5v10l-9 5-9-5V7l9-5zm0 2.3L5.5 8 12 11.7 18.5 8 12 4.3z" fill="currentColor"/>',
   trash: '<path d="M9 3h6l1 2h4v2H4V5h4l1-2zm-3 6h12l-1 12H7L6 9z" fill="currentColor"/>',
   library: '<path d="M4 4h4v16H4V4zm6 0h4v16h-4V4zm6 2l4 1-3 13-4-1 3-13z" fill="currentColor"/>',
+  play: '<path d="M8 5.5v13l11-6.5-11-6.5z" fill="currentColor"/>',
 };
 
 let activeSpace = '全部';
@@ -100,6 +101,9 @@ function buildNav(entry) {
 
   nav.innerHTML = [
     group('', [{ id: 'pick', icon: 'star', text: '精选推荐' }]),
+    group('先看看', [
+      { id: 'showcase', icon: 'play', text: '成品示例' },
+    ]),
     group('模板中心', [
       { id: 'templates', icon: 'grid', text: '场景模板', active: true, tag: '新' },
       { id: 'library', icon: 'library', text: '我的场景库' },
@@ -133,6 +137,7 @@ function buildNav(entry) {
     $$('.studio-nav-item', nav).forEach(x => x.classList.toggle('is-active', x === b));
     const scrollBox = $('.en-scroll', entry);
     if (id === 'pick') scrollBox.scrollTo({ top: 0, behavior: 'smooth' });
+    else if (id === 'showcase') flashTo('#showcaseGrid') || flashTo('#showcaseSec');
     else if (id === 'templates') flashTo('#envGrid') || scrollBox.scrollTo({ top: 0, behavior: 'smooth' });
     else if (id === 'library') flashTo('#mineGrid');
     else if (id === 'import') {
