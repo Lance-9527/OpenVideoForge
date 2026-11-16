@@ -12,6 +12,7 @@
 ## 目录
 
 - [快速开始](#快速开始)
+- [成品示例](#成品示例)
 - [接入 Agent（MCP）](#接入-agentmcp)
 - [它能做什么](#它能做什么)
 - [目录结构](#目录结构)
@@ -60,6 +61,29 @@ node bin/cli.mjs open
 ```bash
 npm test        # 单测 20 套 / 666 断言
 ```
+
+---
+
+## 成品示例
+
+入口页有一块「**成品示例**」，打开就能点开播放 —— 下面这些**全部由本项目自己跑出来**，
+不是渲染图，是真跑一遍的产物：
+
+| 上海黄浦区 · 全境白膜 | 上海黄浦区 · 核心街区 |
+|---|---|
+| ![上海黄浦区全境](assets/showcase/huangpu-city.jpg) | ![上海黄浦区核心街区](assets/showcase/huangpu-core.jpg) |
+| OSM 全量建筑与路网，一个镜头看完整个区 | 缩小半径重抓，看清楼宇与街道的相对关系 |
+
+| 沙发产品片 · 室内棚拍 | 门楼牌坊 · 帧级镜头 |
+|---|---|
+| ![沙发产品片](assets/showcase/sofa-product.jpg) | ![门楼牌坊](assets/showcase/menlou.jpg) |
+| Agent 生成 GLB → 摆进影棚 → 加灯光机位 | 10 秒多镜头时间线，逐帧可对齐 |
+
+其余成品（沙发多机位、室内楼层爆炸图）在入口页的「成品示例」板块里，
+点开即播。
+
+> 真实世界那几条的数据来自 [OpenStreetMap](https://www.openstreetmap.org/copyright)（ODbL），
+> 对外发布含这些数据的作品时同样需要署名 **© OpenStreetMap contributors**。
 
 ---
 
