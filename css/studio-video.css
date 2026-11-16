@@ -1,0 +1,87 @@
+/* ==========================================================================
+   studio-video.css · 导出视频对话框（v1.6）
+   ========================================================================== */
+.vid-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  background: rgba(10, 9, 7, 0.55);
+  backdrop-filter: blur(3px);
+}
+.vid-card {
+  width: min(430px, 92vw);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--cream);
+  color: var(--ink);
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
+}
+.vid-card header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--line-2);
+  font-family: var(--f-serif);
+  font-size: 14px;
+}
+.vid-card header b { font-weight: 600; }
+.vid-card header button {
+  width: 26px; height: 26px;
+  border: 0; border-radius: 5px;
+  background: none; color: var(--ink-3);
+  font-size: 16px; cursor: pointer;
+}
+.vid-card header button:hover { background: var(--cream-3); color: var(--ink); }
+
+.vid-body { padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.vid-row { display: grid; grid-template-columns: 64px 1fr; align-items: center; gap: 10px; }
+.vid-row label { font-size: 12px; color: var(--ink-3); }
+.vid-row select {
+  height: 30px;
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--cream-2);
+  color: var(--ink);
+  font-size: 12px;
+}
+.vid-meta { font-size: 11.5px; color: var(--ink-2); }
+.vid-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--cream-3);
+  overflow: hidden;
+}
+.vid-bar i {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--brass), var(--brass-light));
+  transition: width 0.2s linear;
+}
+.vid-hint { font-size: 11px; line-height: 1.6; color: var(--ink-4); }
+
+.vid-card footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 10px 14px 14px;
+}
+.vid-btn {
+  height: 30px;
+  padding: 0 16px;
+  border: 1px solid var(--brass-2);
+  border-radius: 6px;
+  background: var(--brass);
+  color: #fffdf7;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+.vid-btn:hover { background: var(--brass-2); }
+.vid-btn.ghost { background: none; color: var(--ink-2); border-color: var(--line); }
+.vid-btn.ghost:hover { background: var(--cream-3); }
+.vid-btn[disabled] { opacity: 0.5; cursor: not-allowed; }

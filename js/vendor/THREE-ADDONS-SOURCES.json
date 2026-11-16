@@ -1,0 +1,12 @@
+{
+  "version": "0.160.0",
+  "source": "npm:three@0.160.0/examples/jsm",
+  "license": "MIT",
+  "files": {
+    "GLTFLoader.js": "3d8d4b6b2c7e9b0690fe4b464d4fbb0faca5eda0b1d86391405b9634c1a11355",
+    "GLTFExporter.js": "25f46cc39855fa8bd9fc65e993cb9aaed5ba533a77eddedeae5774fece998793",
+    "BufferGeometryUtils.js": "9be041e96308775d00e2695cc607645b9a9b64fd7c0e759dd8f7c00a8d92becb",
+    "TextureUtils.js": "1b84a7fde8745dd614f62b6ca8108b592144278c07891a0cbe8cdf8e15796efa"
+  },
+  "changes": "Relative imports only; same local three module from import map."
+}

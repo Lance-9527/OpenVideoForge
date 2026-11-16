@@ -1,0 +1,64 @@
+{
+  "name": "openvideoforge",
+  "version": "0.9.0",
+  "description": "OpenVideoForge：VideoForge 的**插件**（网页 3D 摆位/运镜/时间线 + Blender 出成片 + 自带 MCP server 供 Agent 驱动）。不是独立软件 —— 电商棚拍等业务能力的主入口在 VideoForge 客户端里。",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "ovf": "bin/cli.mjs",
+    "openvideoforge": "bin/cli.mjs"
+  },
+  "files": [
+    "bin/",
+    "server/",
+    "index.html",
+    "js/",
+    "css/",
+    "docs/",
+    "agent-side/",
+    "examples/",
+    "plugin/",
+    "tests/",
+    "LICENSE",
+    "THIRD-PARTY-NOTICES.md",
+    "README.md",
+    ".mcp.json"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {},
+  "scripts": {
+    "start": "node bin/cli.mjs open",
+    "serve": "node bin/cli.mjs serve",
+    "mcp": "node bin/cli.mjs mcp",
+    "test": "node tests/imports.mjs && node tests/worldgen-plan.mjs && node tests/osm-parse.mjs && node --import ./tests/three-resolver.mjs tests/osm-river.mjs && node tests/interior-plan.mjs && node tests/terrain.mjs && node tests/hdri.mjs && node tests/undo.mjs && node tests/regress.mjs && node tests/terrain-despike.mjs && node tests/geocode.mjs && node tests/vf-autostart.mjs && node tests/parts.mjs && node tests/pbr.mjs && node tests/sources-inbox.mjs && node tests/presets.mjs && node tests/library.mjs && node --import ./tests/three-resolver.mjs tests/worldgen-render.mjs && node tests/smoke.mjs && node tests/mcp-handshake.mjs",
+    "test:render": "node --import ./tests/three-resolver.mjs tests/worldgen-render.mjs",
+    "test:osm": "node tests/osm-fetch.mjs",
+    "test:accept": "node tools/ovf-full-accept.mjs",
+    "test:world": "node tools/ovf-world-shoot.mjs",
+    "test:city": "node tools/ovf-accept-tour.mjs",
+    "test:huangpu": "node tools/ovf-huangpu-full.mjs",
+    "test:interior": "node tools/ovf-interior-overview.mjs"
+  },
+  "keywords": [
+    "whitebox",
+    "previz",
+    "storyboard",
+    "blender",
+    "mcp",
+    "agent",
+    "three.js",
+    "video"
+  ],
+  "license": "MIT",
+  "author": "Twdhsi-666",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lance-9527/OpenVideoForge.git"
+  },
+  "homepage": "https://github.com/Lance-9527/OpenVideoForge#readme",
+  "bugs": {
+    "url": "https://github.com/Lance-9527/OpenVideoForge/issues"
+  }
+}

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenVideoForge · AI 白膜预演</title>
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+<meta name="description" content="AI 视频白膜场景的导入、播放与管理工作台。预设环境搭白模，或导入任意 AI 生成的白膜 HTML，统一控制播放、跳转、截图。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cg fill='none' stroke='%23ffd250' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M16 3l13 7.5v11L16 29 3 21.5v-11z'/%3E%3Cpath d='M3 10.5L16 18l13-7.5M16 18v11'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/workbench.css?v=101">
+<!-- cinemap 视觉层：先字体，再覆盖层（必须在 workbench.css 之后） -->
+<link rel="stylesheet" href="css/fonts.css?v=101">
+<link rel="stylesheet" href="css/cinemap.css?v=101">
+<!-- v0.3 入口页「模板中心」改造（参考酷家乐电商棚拍信息架构） -->
+<link rel="stylesheet" href="css/studio.css?v=101">
+<!-- v0.4 编辑器右侧三栏（环境 / 对象 / 相机） -->
+<link rel="stylesheet" href="css/inspector.css?v=101">
+<!-- v0.6 素材库 / 画中画 / 曲线 -->
+<link rel="stylesheet" href="css/studio-library.css?v=101">
+<link rel="stylesheet" href="css/studio-city.css?v=101">
+<!-- v0.8 片库 / 影院模式 -->
+<link rel="stylesheet" href="css/studio-reels.css?v=101">
+<!-- v1.0 AI 指令窗 -->
+<link rel="stylesheet" href="css/studio-agent.css?v=101">
+<link rel="stylesheet" href="css/studio-video.css?v=101">
+<link rel="stylesheet" href="css/studio-device.css?v=101">
+<link rel="stylesheet" href="css/studio-render-monitor.css?v=101">
+<link rel="stylesheet" href="css/studio-handoff.css?v=101">
+<link rel="stylesheet" href="css/studio-tracks.css?v=101">
+<link rel="stylesheet" href="css/studio-shot.css?v=101">
+<link rel="stylesheet" href="css/studio-sources.css?v=101">
+<link rel="stylesheet" href="css/studio-look.css?v=101">
+<script type="importmap">
+{ "imports": { "three": "./assets/three.module.js" } }
+</script>
+</head>
+<body>
+<div id="app">
+
+  <!-- ============================================================
+       视图一：入口（Cinemap 风 · 深色星空 + 预设 + 导入）
+       ============================================================ -->
+  <div id="view-entry">
+    <canvas id="starfield"></canvas>
+
+    <header class="en-top">
+      <div class="brand">
+        <img class="brand-logo-img" src="assets/videoforge-mark.png" alt="VideoForge" width="30" height="30">
+        <div class="brand-text">
+          <span class="cn">OpenVideoForge</span>
+          <span class="en">OPEN&nbsp;VIDEO&nbsp;FORGE</span>
+        </div>
+      </div>
+      <div class="en-top-actions">
+        <button class="btn" id="enExportProj" title="把所有场景导出成一个项目 JSON">导出项目</button>
+        <button class="btn ghost" id="enOpenOut" title="打开产物输出目录">输出文件夹</button>
+        <button class="btn" id="enBtnLibrary">场景库</button>
+        
+      </div>
+    </header>
+
+    <div class="en-scroll">
+      <section class="en-hero">
+        <div class="en-mascot"><img src="assets/videoforge-mark.png" alt="VideoForge" width="84" height="84"></div>
+        <h1>先把镜头想清楚，再让 AI 去拍</h1>
+        <p class="en-sub">用预设环境搭一个 3D 白模场景，或把任意 AI 生成的白膜 HTML 导入工作台——统一管理、播放、跳转、截图。</p>
+        <div class="en-cards">
+          <button class="en-card" id="enCardImport">
+            <span class="en-card-icon">
+              <svg viewBox="0 0 24 24" width="26" height="26"><path d="M12 3l-5 5h3v6h4V8h3l-5-5zM5 18h14v2H5v-2z" fill="currentColor"/></svg>
+            </span>
+            <span class="en-card-text">
+              <b>导入白膜 HTML / 场景 JSON</b>
+              <i>AI 生成的白膜 HTML，或本产品导出的场景 JSON（可还原）</i>
+            </span>
+          </button>
+          <button class="en-card" id="enCardModel">
+            <span class="en-card-icon">
+              <svg viewBox="0 0 24 24" width="26" height="26"><path d="M12 2l9 5v10l-9 5-9-5V7l9-5zm0 2.3L5.5 8 12 11.7 18.5 8 12 4.3z" fill="currentColor"/></svg>
+            </span>
+            <span class="en-card-text">
+              <b>导入 3D 模型</b>
+              <i>GLB / GLTF，带材质与颜色；导入后和内置资产一样用</i>
+            </span>
+          </button>
+          <button class="en-card" id="enCardCity">
+            <span class="en-card-icon">
+              <svg viewBox="0 0 24 24" width="26" height="26"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg>
+            </span>
+            <span class="en-card-text">
+              <b>调出真实城市</b>
+              <i>输城市名 → 抓 OpenStreetMap 真实街区 + 地形高程</i>
+            </span>
+          </button>
+          <button class="en-card" id="enCardLast" hidden>
+            <span class="en-card-icon">
+              <svg viewBox="0 0 24 24" width="26" height="26"><path d="M12 4a8 8 0 1 1-7.4 5H2l3.6-3.6L9 9H6.7A6 6 0 1 0 12 6v2z" fill="currentColor"/><path d="M11 9h2v5.4l3.6 2.1-1 1.7-4.6-2.7z" fill="currentColor"/></svg>
+            </span>
+            <span class="en-card-text">
+              <b id="enCardLastTitle">继续上次</b>
+              <i id="enCardLastSub">上次调出的真实世界，本地缓存直接秒开</i>
+            </span>
+          </button>
+          <button class="en-card primary" id="enCardNew">
+            <span class="en-card-icon">
+              <svg viewBox="0 0 24 24" width="26" height="26"><path d="M12 2l-2.4 2.4H6v3.6L3.6 10 6 12.4V16h3.6L12 18.4 14.4 16H18v-3.6L20.4 10 18 7.6V4h-3.6L12 2zm-1 6h2v3h3v2h-3v3h-2v-3H8v-2h3V8z" fill="currentColor"/></svg>
+            </span>
+            <span class="en-card-text">
+              <b>新建白膜场景</b>
+              <i>预设环境 + 人物 / 汽车 / 房间，直接摆进画面</i>
+            </span>
+          </button>
+        </div>
+        <input type="file" id="modelInput" accept=".glb,.gltf,model/gltf-binary,model/gltf+json" hidden multiple>
+      </section>
+
+      <section class="en-sec" id="assetLibSec">
+        <div class="en-sec-head">
+          <h2>资产库</h2>
+          <span class="en-sec-tip" id="assetLibCount">加载中…</span>
+          <button class="btn ghost" id="assetLibRefresh">刷新</button>
+        </div>
+        <div class="alb-tabs" id="assetLibTabs"></div>
+        <div class="alb-grid" id="assetLibGrid"></div>
+        <div class="alb-foot">
+          存放在本机磁盘：<code id="assetLibDir"></code> · 关网页、重启浏览器都不丢
+        </div>
+      </section>
+
+      <section class="en-sec" id="presetSec">
+        <div class="en-sec-head">
+          <h2>预设库</h2>
+          <span class="en-sec-tip">存好的画面，点「调出来」就回到那一眼</span>
+          <button class="btn ghost" id="presetRefresh">刷新</button>
+        </div>
+        <div class="src-grid" id="presetGrid"></div>
+      </section>
+
+      <section class="en-sec" id="srcSec">
+        <div class="en-sec-head">
+          <h2>外部素材源</h2>
+          <span class="en-sec-tip" id="srcInboxHint">现成做好的模型，直接挑</span>
+        </div>
+        <div class="src-grid" id="srcGrid"></div>
+        <div class="en-sec-head" style="margin-top:18px">
+          <h2>收件箱</h2>
+          <span class="en-sec-tip">从上面工具导出的文件放进来，点「导入」就变成可用资产</span>
+          <button class="btn ghost" id="srcRefresh">刷新</button>
+        </div>
+        <div class="src-inbox" id="srcInbox"></div>
+      </section>
+
+      <section class="en-sec">
+        <div class="en-sec-head">
+          <h2>全部模板</h2>
+          <span class="en-sec-tip">选一个开局，进去后随意添加资产</span>
+        </div>
+        <div class="env-grid" id="envGrid"></div>
+      </section>
+
+      <section class="en-sec">
+        <div class="en-sec-head">
+          <h2>我的场景</h2>
+          <span class="en-sec-tip" id="enCount">0 个</span>
+        </div>
+        <div class="mine-grid" id="mineGrid"></div>
+      </section>
+
+      <section class="en-sec">
+        <div class="en-sec-head">
+          <h2>导入 3D 模型</h2>
+          <span class="en-sec-tip">拖 .glb 进来 → 自动进资产库（落盘，关网页不丢）</span>
+        </div>
+        <div class="mine-grid" id="mineModelGrid"></div>
+      </section>
+
+      <footer class="en-foot">
+        OpenVideoForge · v76 · 本地运行不上传 · 数据只在你的机器上
+      </footer>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       视图二：白模编辑器（Cinemap 导演台精简版 · 浅色）
+       ============================================================ -->
+  <div id="view-editor" hidden>
+    <header class="ed-top">
+      <button class="ed-back" id="edBack" title="返回入口">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M15.4 7.4L14 6l-6 6 6 6 1.4-1.4-4.6-4.6 4.6-4.6z" fill="currentColor"/></svg>
+      </button>
+      <span class="ed-env-badge" id="edEnvBadge">空房间</span>
+      <input class="ed-name" id="edName" value="未命名场景" spellcheck="false" maxlength="40">
+      <div class="ed-top-actions">
+        <button class="ed-btn" id="edShot" title="保存当前画面">截图</button>
+        <button class="ed-btn" id="edGrid" title="显示/隐藏地面网格">网格</button>
+        <button class="ed-btn primary" id="edSave">保存</button>
+      </div>
+    </header>
+
+    <div class="ed-body">
+      <nav class="ed-rail" id="edRail"></nav>
+      <div class="ed-drawer" id="edDrawer" hidden>
+        <div class="ed-drawer-head">
+          <input id="edAssetSearch" type="text" placeholder="搜索资产…" autocomplete="off">
+          <button id="edDrawerClose" title="收起">×</button>
+        </div>
+        <div class="ed-asset-grid" id="edAssetGrid"></div>
+        <div class="ed-drawer-foot">点击放置到场景中心</div>
+      </div>
+      <div class="ed-viewport" id="edViewport">
+        <div class="ed-vp-tip">左键旋转 · 滚轮缩放 · 右键/Shift 平移 · 点击选中 · 拖动移动（Shift 拖高度 / Alt 自由拖） · 拖选中物中间的环旋转（琥珀=水平/Y，蓝=竖直/Z） · Ctrl+点可多选，右键可组合/解开 · 空格 WASD 飞行 · Q/E 升降</div>
+      </div>
+      <aside class="ed-inspect" id="edInspect"></aside>
+    </div>
+
+    <footer class="ed-bottom">
+      <div class="ed-cams" id="edCams">
+        <button class="ed-chip add" id="edAddCam">＋ 保存机位</button>
+      </div>
+      <div class="ed-shots" id="edShots"></div>
+      <div class="ed-bottom-ops">
+        <button class="ed-btn danger" id="edDel">删除选中</button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ============================================================
+       视图三：场景库（卡片网格 / 播放器 · 原有功能）
+       ============================================================ -->
+  <div id="view-library" hidden>
+    <header id="topbar">
+      <button class="btn ghost lib-back" id="libBack">← 入口</button>
+      <div class="brand">
+        <img class="brand-logo-img" src="assets/videoforge-mark.png" alt="VideoForge" width="30" height="30">
+        <div class="brand-text">
+          <span class="cn">OpenVideoForge</span>
+          <span class="en">OPEN&nbsp;VIDEO&nbsp;FORGE</span>
+        </div>
+      </div>
+
+      <div class="search">
+        <svg viewBox="0 0 24 24" width="14" height="14"><path d="M10 2a8 8 0 105.3 14l4.9 4.9 1.4-1.4-4.9-4.9A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z" fill="currentColor"/></svg>
+        <input id="searchInput" type="text" placeholder="搜索场景标题 / 作者 / 取景地…" autocomplete="off">
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" id="btnImport">
+          <svg viewBox="0 0 24 24" width="13" height="13"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z" fill="currentColor"/></svg>
+          导入 HTML
+        </button>
+        <button class="btn" id="btnNewNative">新建白膜</button>
+        
+      </div>
+    </header>
+
+    <main id="main">
+      <aside id="library">
+        <div class="lib-head">
+          <span>场景库</span>
+          <span class="lib-count" id="libCount">0</span>
+          <span class="lib-ops">
+            <button id="btnExportProj" title="导出全部场景为项目 JSON">导出</button>
+            <button id="btnClearAll" title="清空全部场景">清空</button>
+          </span>
+        </div>
+        <div id="sceneList"></div>
+        <div class="lib-foot">
+          <div id="stats"></div>
+          <button class="btn wide" id="btnLoadExample">载入示例场景（规范演示）</button>
+        </div>
+      </aside>
+
+      <section id="viewport">
+        <div id="gridView"><div id="gridCards"></div></div>
+        <div id="emptyHint">
+          <div class="empty-icon">◍</div>
+          <div class="empty-title">把 AI 生成的白膜 HTML 拖进来</div>
+          <div class="empty-sub">支持规范文件（完整控制）与旧文件（兼容层自动适配）<br>点「规范」查看导入标准，或先「载入示例场景」体验</div>
+        </div>
+        <div id="dropMask" hidden>
+          <div class="drop-box">
+            <div class="drop-icon">⬇</div>
+            <div>松开鼠标 · 导入白膜 HTML / 项目 JSON</div>
+          </div>
+        </div>
+      </section>
+
+      <aside id="detail" hidden></aside>
+    </main>
+  </div>
+
+  <div id="toasts"></div>
+
+  <div id="modal" hidden>
+    <div class="modal-box">
+      <header class="modal-head">
+        <span id="modalTitle"></span>
+        <button id="modalClose" title="关闭">×</button>
+      </header>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <input type="file" id="fileInput" multiple accept=".html,.htm,.json" hidden>
+</div>
+
+<script type="module" src="js/assetlib.js?v=101"></script>
+<script type="module" src="js/scenes.js?v=101"></script>
+<script src="js/save-file.js?v=101"></script>
+<script src="js/grade-pipeline.js?v=101"></script>
+<!-- ★ 2026-11-10：「打开就是上次的地方」—— 记住并自动恢复上次调出的真实世界。
+     ★ 必须排在 app.js **之前**：app.js 的 init() 会同步读 window.__ovfLastWorld
+       来显示入口页的「继续上次」卡片；模块按文档顺序执行，放后面就来不及了
+       （实测：卡片一直不出现）。 -->
+<script type="module" src="js/studio-lastworld.js?v=101"></script>
+<script type="module" src="js/app.js?v=101"></script>
+<!-- v0.3 入口页改造：加壳 + 装饰卡片 + 筛选，不改 app.js 渲染逻辑 -->
+<script type="module" src="js/studio.js?v=101"></script>
+<!-- v0.5 编辑器顶栏重排 + 工具（撤销/吸附/灯光/空对象/场景剪辑） -->
+<script type="module" src="js/studio-topbar.js?v=101"></script>
+<!-- v0.4 编辑器右侧三栏：灯光 / 机位 / 渲染 -->
+<script type="module" src="js/studio-inspector.js?v=101"></script>
+<!-- v0.6 素材库 / 画中画 / 曲线逐帧 -->
+<script type="module" src="js/studio-library.js?v=101"></script>
+<script type="module" src="js/studio-pip.js?v=101"></script>
+<script type="module" src="js/studio-look.js?v=101"></script>
+<script type="module" src="js/thumb.js?v=101"></script>
+<script type="module" src="js/parts.js?v=101"></script>
+<script type="module" src="js/studio-csm.js?v=101"></script>
+<script type="module" src="js/studio-city.js?v=101"></script>
+<script type="module" src="js/studio-curve.js?v=101"></script>
+<!-- v0.8 片库 / 预演播放 / AI 生成入口 -->
+<script type="module" src="js/studio-reels.js?v=101"></script>
+<!-- v1.0 指令总线 + 右侧 AI 指令窗 + Agent 桥客户端 -->
+<script type="module" src="js/studio-agent.js?v=101"></script>
+<script type="module" src="js/studio-video.js?v=101"></script>
+<script type="module" src="js/studio-device.js?v=101"></script>
+<script type="module" src="js/studio-bridge.js?v=101"></script>
+<script type="module" src="js/studio-render-monitor.js?v=101"></script>
+<script type="module" src="js/studio-revisions.js?v=101"></script>
+<script type="module" src="js/studio-handoff.js?v=101"></script>
+<script type="module" src="js/studio-tracks.js?v=101"></script>
+<script type="module" src="js/studio-dragpanels.js?v=101"></script>
+<script type="module" src="js/studio-myassets.js?v=101"></script>
+<script type="module" src="js/studio-ctxmenu.js?v=101"></script>
+<script type="module" src="js/studio-previz.js?v=101"></script>
+<script type="module" src="js/studio-shot.js?v=101"></script>
+<script type="module" src="js/studio-sources.js?v=101"></script>
+<script type="module" src="js/studio-presets.js?v=101"></script>
+<script type="module" src="js/studio-assetlibrary.js?v=101"></script>
+</body>
+</html>

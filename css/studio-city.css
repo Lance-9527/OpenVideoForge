@@ -1,0 +1,128 @@
+/* ============================================================================
+ * css/studio-city.css —— 「调出真实城市」弹层
+ * ========================================================================== */
+
+.city-picker {
+  position: fixed;
+  inset: 0;
+  z-index: 1400;
+  background: rgba(18, 20, 24, .62);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 8vh 16px 16px;
+}
+
+.cp-box {
+  width: min(560px, 100%);
+  background: var(--panel, #1c1f26);
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 14px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .55);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: 84vh;
+}
+
+.cp-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+}
+.cp-head b { font-size: 15px; letter-spacing: .3px; }
+.cp-x {
+  background: none; border: 0; color: #9aa3af;
+  font-size: 22px; line-height: 1; cursor: pointer; padding: 0 4px;
+}
+.cp-x:hover { color: #fff; }
+
+.cp-body { padding: 14px 16px; overflow: auto; }
+
+.cp-label {
+  display: block;
+  font-size: 12px;
+  color: #9aa3af;
+  margin: 10px 0 6px;
+}
+.cp-body > .cp-label:first-child { margin-top: 0; }
+
+.cp-search { display: flex; gap: 8px; }
+.cp-search input {
+  flex: 1;
+  background: #12141a;
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 9px;
+  color: #e8eaed;
+  padding: 9px 11px;
+  font-size: 14px;
+  outline: none;
+}
+.cp-search input:focus { border-color: #4d9dff; }
+
+.cp-sugg {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 8px;
+  max-height: 190px;
+  overflow: auto;
+}
+.cp-sugg:empty { margin-top: 0; }
+.cp-sugg-item {
+  display: flex; align-items: baseline; gap: 8px;
+  background: transparent; border: 0; border-radius: 8px;
+  color: #d7dbe0; text-align: left;
+  padding: 7px 9px; cursor: pointer; font-size: 13px;
+}
+.cp-sugg-item:hover { background: rgba(255, 255, 255, .07); }
+.cp-sugg-item b { font-weight: 600; }
+.cp-sugg-item i { color: #7d8794; font-style: normal; font-size: 12px; }
+
+.cp-picked {
+  margin-top: 10px;
+  min-height: 22px;
+  font-size: 13px;
+  color: #c8d2dc;
+}
+.cp-picked:empty { display: none; }
+.cp-coord {
+  display: block;
+  margin-top: 3px;
+  color: #7d8794;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.cp-radii { display: flex; gap: 6px; flex-wrap: wrap; }
+.cp-radius {
+  background: #23262e; border: 1px solid rgba(255, 255, 255, .1);
+  color: #c2c8d0; border-radius: 8px; padding: 6px 12px;
+  font-size: 13px; cursor: pointer;
+}
+.cp-radius:hover { border-color: rgba(255, 255, 255, .22); }
+.cp-radius.on {
+  background: rgba(77, 157, 255, .18);
+  border-color: #4d9dff;
+  color: #dceaff;
+}
+
+.cp-hint {
+  margin: 12px 0 0;
+  font-size: 12px;
+  line-height: 1.65;
+  color: #79838f;
+}
+
+.cp-foot {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 16px;
+  border-top: 1px solid rgba(255, 255, 255, .08);
+}
+.cp-status { flex: 1; font-size: 12.5px; color: #9aa3af; }
+.cp-status.ok { color: #6ddc9a; }
+.cp-status.warn { color: #f0b45c; }
+.cp-status.run { color: #6db3ff; }

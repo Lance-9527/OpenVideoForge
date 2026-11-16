@@ -1,0 +1,32 @@
+{
+  "name": "openvideoforge",
+  "version": "0.9.0",
+  "description": "OpenVideoForge：Agent 造模型 → 工作台排位/运镜/时间线 → Blender 出成片；通过 MCP 暴露 3D 场景与出片工具",
+  "mcp": {
+    "command": "node",
+    "args": [
+      "bin/cli.mjs",
+      "mcp"
+    ],
+    "env": {
+      "WBWB_OUT_DIR": "",
+      "WBWB_PORT": "8787",
+      "WBWB_VF_URL": "http://127.0.0.1:8765"
+    }
+  },
+  "skills": [
+    "SKILL.md"
+  ],
+  "requires": {
+    "node": ">=18",
+    "optional": [
+      "VideoForge 渲染服务 (127.0.0.1:8765)",
+      "Blender 4.2 LTS"
+    ]
+  },
+  "permissions": {
+    "network": "localhost-only",
+    "filesystem": "output-dir-only",
+    "telemetry": "none"
+  }
+}

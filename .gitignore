@@ -1,0 +1,32 @@
+node_modules/
+*.log
+dist/
+_agent/
+*.tgz
+.DS_Store
+Thumbs.db
+# 本地输出与临时
+output/
+tmp/
+
+# ──────────── Python 字节码（本地跑一次就产生）────────────
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# ──────────── 环境变量 / 本地配置（**绝不入库**）────────────
+.env
+.env.*
+!.env.example
+
+# ──────────── 交付说明补丁脚本（个人工作流，指向本机的 VideoForge 交付目录）────────────
+#   它们改的是本机 VideoForge 交付目录下的说明文档，不是本项目代码。
+#   本地全部保留，只是不进公开仓库。
+tools/patch-delivery*.py
+tools/patch-geocode.py
+
+# ──────────── 编辑器 / 系统 ────────────
+.idea/
+.vscode/
+*.swp
+*.bak

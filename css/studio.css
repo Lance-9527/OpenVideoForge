@@ -1,0 +1,436 @@
+/* ==========================================================================
+   studio.css · 入口页「模板中心」改造（v0.3）
+   参考：酷家乐电商棚拍 / 视颂模板页的布局语言 ——
+   左侧分组导航 · 顶栏 · 大标题 + 多维筛选 chips · 卡片网格 + hover「拍同款」
+   配色仍走本产品的 cinemap token（米色纸 + 墨 + 黄铜），不搬对方的紫调。
+
+   范围：只在 #view-entry 内生效，不碰编辑器 / 场景库。
+   ========================================================================== */
+
+/* --- 整体骨架：顶栏跨两列，左导航 + 主区 --------------------------------- */
+#view-entry {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  grid-template-rows: 56px minmax(0, 1fr);
+  background:
+    radial-gradient(1000px 420px at 18% -8%, rgba(176, 141, 87, 0.10), transparent 62%),
+    radial-gradient(760px 360px at 92% 0%, rgba(110, 138, 117, 0.07), transparent 58%),
+    var(--cream-2);
+  color: var(--ink);
+}
+
+/* 星尘底不再需要（改纸质底） */
+#view-entry #starfield { display: none; }
+
+/* --- 顶栏 ---------------------------------------------------------------- */
+#view-entry .en-top {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  height: 56px;
+  padding: 0 20px 0 18px;
+  background: color-mix(in srgb, var(--cream) 86%, transparent);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: saturate(1.1) blur(6px);
+  z-index: 5;
+}
+
+#view-entry .en-top .brand { gap: 10px; }
+#view-entry .brand-logo circle,
+#view-entry .brand-logo ellipse,
+#view-entry .brand-logo path { stroke: var(--brass); }
+#view-entry .brand-text .cn {
+  font-family: var(--f-serif);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+#view-entry .brand-text .en {
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  color: var(--ink-4);
+}
+
+#view-entry .en-top-actions { gap: 8px; }
+
+/* 顶栏「新建」主按钮（复用 .btn.primary 但更圆润） */
+#view-entry .en-top-actions .btn.primary,
+.studio-new-btn {
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: var(--brass);
+  border: 1px solid var(--brass-2);
+  color: #fffdf7;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+#view-entry .en-top-actions .btn.primary:hover,
+.studio-new-btn:hover { background: var(--brass-2); }
+
+/* --- 左侧导航 ------------------------------------------------------------ */
+.studio-nav {
+  grid-column: 1;
+  grid-row: 2;
+  overflow-y: auto;
+  padding: 14px 10px 20px;
+  border-right: 1px solid var(--line);
+  background: color-mix(in srgb, var(--cream) 72%, transparent);
+}
+
+.studio-nav-group + .studio-nav-group { margin-top: 14px; }
+
+.studio-nav-label {
+  padding: 0 10px 6px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ink-4);
+}
+
+.studio-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  height: 34px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 7px;
+  background: none;
+  color: var(--ink-2);
+  font-size: 12.5px;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.studio-nav-item:hover { background: var(--cream-3); color: var(--ink); }
+.studio-nav-item.is-active {
+  background: color-mix(in srgb, var(--brass) 14%, transparent);
+  color: var(--brand-ink, var(--brass-2));
+  font-weight: 500;
+  box-shadow: inset 2px 0 0 var(--brass);
+}
+.studio-nav-item .ico { width: 16px; height: 16px; flex: 0 0 16px; opacity: 0.85; }
+.studio-nav-item .badge {
+  margin-left: auto;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--coral);
+  color: #fff;
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+}
+.studio-nav-item .tag-new {
+  margin-left: auto;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--jade) 18%, transparent);
+  color: var(--jade);
+  font-size: 9.5px;
+}
+
+/* --- 主滚动区 ------------------------------------------------------------ */
+#view-entry .en-scroll {
+  grid-column: 2;
+  grid-row: 2;
+  overflow-y: auto;
+  padding: 22px 26px 40px;
+}
+
+/* Hero 收敛成一条横幅，不再占据首屏 */
+#view-entry .en-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 4px 24px;
+  padding: 18px 20px;
+  margin-bottom: 20px;
+  text-align: left;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--brass) 7%, transparent), transparent 70%),
+    var(--cream);
+}
+#view-entry .en-mascot { display: none; }
+#view-entry .en-hero h1 {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: start;
+  margin: 0 0 2px;
+  font-family: var(--f-serif);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  text-align: left;
+}
+#view-entry .en-sub {
+  grid-column: 1;
+  grid-row: 2;
+  justify-self: start;
+  margin: 0;
+  max-width: 62ch;
+  font-size: 12.5px;
+  line-height: 1.6;
+  text-align: left;
+  color: var(--ink-3);
+}
+#view-entry .en-cards {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+#view-entry .en-card {
+  min-width: 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--cream-2);
+}
+#view-entry .en-card:hover { border-color: var(--brass-light); background: var(--cream); }
+
+/* --- 工具条：标题 + 筛选 + 搜索 ------------------------------------------ */
+.studio-toolbar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px 18px;
+  margin-bottom: 4px;
+}
+.studio-title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.studio-title {
+  font-family: var(--f-serif);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.studio-count { font-size: 11.5px; color: var(--ink-4); }
+
+.studio-search {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  justify-self: end;
+}
+.studio-search input {
+  width: 100%;
+  height: 34px;
+  padding: 0 104px 0 32px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--cream);
+  font-size: 12.5px;
+  color: var(--ink);
+}
+.studio-search input::placeholder { color: var(--ink-4); }
+.studio-search input:focus { outline: 2px solid var(--brass); outline-offset: 1px; }
+.studio-search .lens {
+  position: absolute;
+  left: 11px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--ink-4);
+  pointer-events: none;
+}
+.studio-search .ai-pill {
+  position: absolute;
+  right: 6px; top: 50%;
+  transform: translateY(-50%);
+  height: 24px;
+  padding: 0 9px;
+  border: 1px solid color-mix(in srgb, var(--brass) 42%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--brass) 10%, transparent);
+  color: var(--brass-2);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  cursor: default;
+}
+
+/* 筛选行：label + chips */
+.studio-filters {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 6px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--cream) 78%, transparent);
+}
+.studio-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+}
+.studio-filter-key {
+  width: 38px;
+  flex: 0 0 38px;
+  font-size: 11.5px;
+  color: var(--ink-4);
+}
+.studio-chip {
+  height: 26px;
+  padding: 0 11px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: none;
+  color: var(--ink-2);
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+.studio-chip:hover { background: var(--cream-3); color: var(--ink); }
+.studio-chip.is-on {
+  background: color-mix(in srgb, var(--brass) 15%, transparent);
+  border-color: color-mix(in srgb, var(--brass) 34%, transparent);
+  color: var(--brass-2);
+  font-weight: 500;
+}
+
+/* --- 模板卡片：复用 .env-card 结构，改成模板卡 ---------------------------- */
+#view-entry .env-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 12px;
+}
+
+#view-entry .env-card {
+  position: relative;
+  display: block;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--cream);
+  box-shadow: 0 1px 2px rgba(26, 22, 18, 0.04);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+  text-align: left;
+}
+#view-entry .env-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--brass-light);
+  box-shadow: 0 10px 26px rgba(26, 22, 18, 0.10);
+}
+
+#view-entry .env-card .env-prev {
+  display: block;
+  aspect-ratio: 4 / 3;
+  border-radius: 0;
+  background: #12100c;
+}
+#view-entry .env-card .env-prev svg { width: 100%; height: 100%; display: block; }
+
+#view-entry .env-card .env-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 12px 10px;
+  border-top: 1px solid var(--line-2);
+  background: var(--cream);
+}
+#view-entry .env-card .env-name {
+  font-family: var(--f-sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+}
+#view-entry .env-card .env-desc {
+  font-size: 10.5px;
+  color: var(--ink-4);
+  white-space: nowrap;
+}
+
+/* hover 出现「用这个模板」按钮（对应参考页的「拍同款」） */
+#view-entry .env-card .studio-use {
+  position: absolute;
+  right: 10px;
+  bottom: 46px;
+  height: 26px;
+  padding: 0 11px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--brass);
+  color: #fffdf7;
+  font-size: 11.5px;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  pointer-events: none;
+}
+#view-entry .env-card:hover .studio-use,
+#view-entry .env-card:focus-within .studio-use {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* 左上角推荐标（对应参考页「推荐拍摄类型」） */
+#view-entry .env-card .studio-badge {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 7px;
+  border-radius: 5px;
+  background: rgba(10, 9, 7, 0.62);
+  color: #f3ecdb;
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(4px);
+}
+
+/* 我的方案 / 空状态 */
+#view-entry .mine-grid { gap: 12px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+#view-entry .en-sec-head h2 {
+  font-family: var(--f-serif);
+  font-size: 16px;
+  font-weight: 500;
+}
+#view-entry .en-sec { margin-top: 26px; }
+
+.studio-empty {
+  padding: 26px;
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  color: var(--ink-4);
+  font-size: 12.5px;
+  text-align: center;
+}
+
+/* 窄屏：导航收成横向条 */
+@media (max-width: 980px) {
+  #view-entry { grid-template-columns: 1fr; grid-template-rows: 56px auto minmax(0, 1fr); }
+  .studio-nav {
+    grid-column: 1; grid-row: 2;
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 8px 12px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .studio-nav-group { display: contents; }
+  .studio-nav-label { display: none; }
+  .studio-nav-item { width: auto; white-space: nowrap; }
+  #view-entry .en-scroll { grid-column: 1; grid-row: 3; padding: 16px; }
+  #view-entry .env-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #view-entry .en-hero { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  #view-entry .env-grid { grid-template-columns: 1fr; }
+  #view-entry .mine-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .studio-search { max-width: none; }
+}

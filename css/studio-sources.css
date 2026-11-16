@@ -1,0 +1,268 @@
+/* ============================================================================
+ * css/studio-sources.css —— 入口页「外部素材源」面板
+ *
+ * 跟入口页现有风格一致（cream / brass 主题），并支持暗色主题。
+ * ========================================================================== */
+
+.src-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
+  gap: 14px;
+}
+
+.src-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 15px 13px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg1);
+  transition: border-color .15s ease, transform .15s ease;
+}
+.src-card:hover { border-color: var(--accent-strong); transform: translateY(-1px); }
+
+.src-head { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.src-head b { font-size: var(--fs-sm, 14px); color: var(--text); }
+.src-jp { font-size: 11px; color: var(--text-muted); }
+
+.src-what {
+  font-size: var(--fs-2xs, 11.5px);
+  color: var(--text-dim);
+  line-height: 1.5;
+  min-height: 34px;
+}
+
+.src-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+.src-tags i {
+  font-style: normal;
+  font-size: 10px;
+  line-height: 1;
+  padding: 4px 7px;
+  border-radius: 5px;
+  border: 1px solid var(--line);
+  color: var(--text-muted);
+  background: var(--bg0);
+}
+.src-tags i.hot {
+  border-color: var(--accent-strong);
+  color: var(--accent-strong);
+  font-weight: 600;
+}
+
+.src-credit {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  line-height: 1.45;
+  padding-top: 6px;
+  border-top: 1px dashed var(--line);
+}
+.src-credit.must { color: #b4551f; }
+html[data-theme="dark"] .src-credit.must { color: #ffb27a; }
+
+.src-actions { display: flex; gap: 8px; margin-top: auto; padding-top: 8px; }
+.src-actions .btn { flex: 1; justify-content: center; }
+.src-actions .btn.ghost { flex: 0 0 auto; }
+
+/* ── 收件箱 ─────────────────────────────────────────────────────────── */
+.src-inbox {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg1);
+  min-height: 64px;
+}
+.src-empty { font-size: var(--fs-2xs, 11.5px); color: var(--text-muted); padding: 8px 2px; }
+
+.src-file {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 10px;
+  border-radius: 9px;
+  background: var(--bg0);
+  border: 1px solid var(--line);
+}
+.sf-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 12.5px;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sf-size { font-size: 11px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.sf-kind {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  padding: 3px 8px;
+  border-radius: 5px;
+  border: 1px solid var(--line);
+}
+
+#srcInboxHint code {
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--bg0);
+  border: 1px solid var(--line);
+  color: var(--accent-strong);
+  word-break: break-all;
+}
+
+/* ── 预设库卡片 ─────────────────────────────────────────────────────── */
+.src-card.preset { padding: 10px 12px 11px; }
+.preset-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg0);
+  display: block;
+}
+.preset-thumb.ph {
+  background:
+    repeating-linear-gradient(45deg, var(--bg0) 0 8px, var(--bg1) 8px 16px);
+}
+.src-card.preset .src-head { margin-top: 9px; }
+.src-card.preset .src-what { min-height: 0; }
+
+/* ── 资产库 ─────────────────────────────────────────────────────────── */
+.alb-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.alb-tab {
+  font: inherit;
+  font-size: var(--fs-2xs, 11.5px);
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg1);
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: border-color .15s, color .15s;
+}
+.alb-tab b { font-weight: 600; opacity: .65; margin-left: 3px; }
+.alb-tab:hover { border-color: var(--accent-strong); }
+.alb-tab.on {
+  border-color: var(--accent-strong);
+  color: var(--accent-strong);
+  background: var(--bg0);
+  font-weight: 600;
+}
+
+.alb-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  gap: 12px;
+}
+.alb-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--bg1);
+  transition: border-color .15s ease;
+}
+.alb-card:hover { border-color: var(--accent-strong); }
+
+.alb-thumb {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 7px;
+  border: 1px solid var(--line);
+  background: var(--bg0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+.alb-ph-scene { background: linear-gradient(140deg, #cfd6dc, #9aa7b2); color: #3c464f; }
+.alb-ph-model { background: linear-gradient(140deg, #e0d6c4, #b6a894); }
+.alb-ph-material { background: linear-gradient(140deg, #d9c9a8, #8fa3b8); }
+.alb-ph-light { background: linear-gradient(140deg, #ffe9c2, #f0a15e); color: #5a3a12; }
+.alb-ph-prop { background: linear-gradient(140deg, #d8d4cb, #a8a49a); }
+.alb-ph-character { background: linear-gradient(140deg, #e6cdd6, #b98fa0); }
+
+.alb-name {
+  font-size: 12.5px;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.alb-meta { font-size: 10.5px; color: var(--text-muted); }
+.alb-credit {
+  font-size: 10px;
+  color: #b4551f;
+  line-height: 1.4;
+}
+html[data-theme="dark"] .alb-credit { color: #ffb27a; }
+.alb-acts { display: flex; gap: 6px; margin-top: auto; padding-top: 4px; }
+.alb-acts .btn { flex: 1; justify-content: center; padding: 5px 8px; font-size: 11.5px; }
+.alb-acts .btn.ghost { flex: 0 0 auto; }
+
+.alb-foot {
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.alb-foot code {
+  font-family: ui-monospace, Consolas, monospace;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--bg0);
+  border: 1px solid var(--line);
+  color: var(--accent-strong);
+  word-break: break-all;
+}
+
+/* ── 资产库分组（编辑器左轨第 10 格的抽屉） ─────────────────────────── */
+.lib-group {
+  grid-column: 1 / -1;
+  margin-bottom: 4px;
+}
+.lib-group-head {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  padding: 7px 4px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--ed-text, inherit);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  text-align: left;
+}
+.lib-group-head b { font-weight: 600; }
+.lg-caret { opacity: .55; font-size: 10px; }
+.lg-count {
+  margin-left: auto;
+  font-size: 10.5px;
+  opacity: .5;
+  font-variant-numeric: tabular-nums;
+}
+.lib-group-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 8px;
+  padding: 10px 0 14px;
+}
+.lib-group-body[hidden] { display: none; }

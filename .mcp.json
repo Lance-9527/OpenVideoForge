@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "openvideoforge": {
+      "command": "node",
+      "args": ["bin/cli.mjs", "mcp"],
+      "env": {
+        "WBWB_OUT_DIR": "",
+        "WBWB_PORT": "8787",
+        "WBWB_VF_URL": "http://127.0.0.1:8765"
+      }
+    }
+  }
+}

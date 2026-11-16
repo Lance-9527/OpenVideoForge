@@ -1,0 +1,138 @@
+/* ==========================================================================
+   studio-tracks.css · 运动轨迹面板（v40）
+   ========================================================================== */
+.tk-panel {
+  position: fixed;
+  left: 356px;
+  bottom: 320px;
+  width: 340px;
+  z-index: 67;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--cream);
+  box-shadow: 0 18px 50px rgba(26, 22, 18, 0.22);
+  overflow: hidden;
+}
+.tk-panel[hidden] { display: none; }
+
+.tk-head {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--line-2);
+  background: color-mix(in srgb, var(--brass) 7%, transparent);
+}
+.tk-head b { font-family: var(--f-serif); font-size: 13.5px; font-weight: 600; }
+.tk-sub { font-size: 10px; color: var(--ink-4); }
+.tk-x {
+  margin-left: auto; width: 24px; height: 24px;
+  border: 0; border-radius: 5px; background: none;
+  color: var(--ink-3); font-size: 15px; cursor: pointer;
+}
+.tk-x:hover { background: var(--cream-3); }
+
+.tk-body { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 8px; }
+.tk-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.tk-btn {
+  flex: 1 1 0;
+  height: 30px; padding: 0 10px;
+  border: 1px solid var(--brass-2); border-radius: 7px;
+  background: var(--brass); color: #fffdf7;
+  font-size: 12px; cursor: pointer;
+}
+.tk-btn:hover { background: var(--brass-2); }
+.tk-btn.ghost { background: none; color: var(--ink-2); border-color: var(--line); }
+.tk-btn.ghost:hover { background: var(--cream-3); }
+
+.tk-hint { font-size: 10.5px; line-height: 1.6; color: var(--ink-4); }
+.tk-hint code { color: var(--brass-2); }
+
+.tk-list { display: flex; flex-direction: column; gap: 4px; }
+.tk-item {
+  display: flex; align-items: center; gap: 7px;
+  padding: 5px 7px;
+  border: 1px solid var(--line-2); border-radius: 6px;
+  background: var(--cream-2);
+  font-size: 11.5px; color: var(--ink-2);
+}
+.tk-item.dim { color: var(--ink-4); }
+.tk-item em { margin-left: auto; font-style: normal; color: var(--ink-4); font-size: 10.5px; }
+.tk-dot { width: 7px; height: 7px; border-radius: 50%; flex: 0 0 auto; }
+.tk-dot.cam { background: #b08d57; }
+.tk-dot.obj { background: #6e8a75; }
+
+/* v44 轨迹面板：缓动/跟随/高度 网格 */
+.tk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 8px; font-size: 10.5px; color: var(--ink-3); }
+.tk-grid label { display: flex; align-items: center; gap: 5px; }
+.tk-grid select, .tk-grid input[type=number] {
+  height: 24px; flex: 1 1 auto; min-width: 0;
+  border: 1px solid var(--line); border-radius: 5px;
+  background: var(--cream-2); color: var(--ink); font-size: 11px; padding: 0 4px;
+}
+.tk-grid .tk-check { justify-content: flex-start; }
+
+/* v49 拍成片状态行 */
+.tk-status {
+  font-size: 10.5px; line-height: 1.5;
+  padding: 5px 7px; border-radius: 6px;
+  border: 1px solid var(--line-2);
+  background: var(--cream-2); color: var(--ink-3);
+  word-break: break-all;
+}
+.tk-status.run { color: var(--brass-2); border-color: var(--brass-2); }
+.tk-status.ok { color: #2f6b4f; border-color: #7fa98e; background: #eef4ef; }
+.tk-status.err { color: var(--coral); border-color: var(--coral); }
+.pip-dev {
+  font-size: 9.5px; padding: 1px 5px; border-radius: 4px;
+  background: rgba(176, 141, 87, 0.22); color: #d4b68a;
+  letter-spacing: 0.02em;
+}
+
+/* v52 轨迹面板：目标选择 + 时间线拖条（规则见下方 tkl-*） */
+.tk-target-row { display: flex; align-items: center; gap: 6px; }
+.tk-tlabel { width: 40px; color: var(--ink-3); font-size: 10.5px; flex: 0 0 auto; }
+#tkTarget { flex: 1 1 auto; min-width: 0; height: 26px; border: 1px solid var(--line); border-radius: 6px; background: var(--cream-2); color: var(--ink); font-size: 11.5px; padding: 0 4px; }
+.tk-tl-head { font-size: 9.5px; color: var(--ink-4); margin-top: 2px; }
+.tk-timeline { display: flex; flex-direction: column; gap: 3px; max-height: 160px; overflow-y: auto; }
+  position: absolute; top: 0; bottom: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(180deg, #cdad72, #b08d57);
+  border-radius: 4px; cursor: grab; touch-action: none;
+}
+.tk-shoot-row { display: flex; align-items: center; gap: 6px; }
+#tkDur { width: 58px; height: 26px; border: 1px solid var(--line); border-radius: 6px; background: var(--cream-2); color: var(--ink); font-size: 11.5px; padding: 0 4px; }
+.tk-unit { font-size: 10px; color: var(--ink-4); }
+#tkRes { height: 26px; border: 1px solid var(--line); border-radius: 6px; background: var(--cream-2); color: var(--ink); font-size: 10.5px; padding: 0 3px; }
+
+/* v53 时间线（改名避免与分镜时间线 .tl-* 冲突） */
+.tk-timeline { display: flex; flex-direction: column; gap: 3px; max-height: 150px; overflow-y: auto; }
+.tkl-row { display: grid; grid-template-columns: 60px 1fr 30px; gap: 5px; align-items: center; font-size: 10px; color: var(--ink-3); }
+.tkl-row.dim { opacity: 0.5; }
+.tkl-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 16px; }
+.tkl-track {
+  position: relative; height: 16px; width: 100%;
+  background: var(--cream-3); border: 1px solid var(--line-2); border-radius: 4px;
+  display: block;
+}
+.tkl-bar {
+  position: absolute; top: 0; bottom: 0; left: 0; width: 100%;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(180deg, #cdad72, #b08d57);
+  border-radius: 4px; cursor: grab; touch-action: none;
+}
+.tkl-bar.on { box-shadow: 0 0 0 1.5px #fff8ec, 0 0 0 2.5px var(--brass-2); }
+.tkl-bar b { font-size: 8.5px; font-weight: 600; color: #2b2118; pointer-events: none; white-space: nowrap; }
+.tkl-edge { position: absolute; top: 0; bottom: 0; width: 8px; cursor: ew-resize; }
+.tkl-edge.l { left: 0; }
+.tkl-edge.r { right: 0; }
+.tkl-speed { height: 15px; padding: 0; border: 1px solid var(--line); border-radius: 4px; background: var(--cream-2); color: var(--ink-3); font-size: 9px; cursor: pointer; }
+.tkl-speed:hover { border-color: var(--brass-2); color: var(--brass-2); }
+
+/* v58 轨迹面板：渲染器能力行（Blender 在线 / 浏览器录制） */
+.tk-caprow { align-items: center; }
+.tk-cap { font-size: 10.5px; color: var(--ink-3); flex: 1 1 auto; }
+.tk-cap.ok { color: #2f6b4f; }
+.tk-cap.warn { color: #a3541f; }
+.tk-cap-retry { width: 22px; height: 20px; border: 1px solid var(--line); border-radius: 5px; background: var(--cream-2); color: var(--ink-3); font-size: 11px; cursor: pointer; }
+.tk-cap-retry:hover { border-color: var(--brass-2); color: var(--brass-2); }
